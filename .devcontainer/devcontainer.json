@@ -1,0 +1,8 @@
+{
+  "name": "ollama",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "ollama",
+  "workspaceFolder": "/app",
+  "shutdownAction": "stopCompose",
+  "initializeCommand": "ssh-add ~/.ssh/id_rsa"
+}

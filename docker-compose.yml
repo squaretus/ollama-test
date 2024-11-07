@@ -1,0 +1,25 @@
+services:
+  ollama:
+    build: .
+    env_file:
+      - .env
+    # entrypoint: sh -c 'sleep infinity'
+    volumes:
+      - ./:/app:cached
+      - ollama:/root/.ollama
+    ports:
+      - '11434:11434'
+
+  open_webui:
+    image: ghcr.io/open-webui/open-webui:main
+    env_file:
+      - .env
+    volumes:
+      - ollama:/root/.ollama
+      - open-webui:/app/backend/data
+    ports:
+      - '3003:8080'
+
+volumes:
+  ollama:
+  open-webui:
