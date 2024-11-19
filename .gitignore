@@ -1,0 +1,10 @@
+# List of files that needs to be ignored in git
+
+# Env files
+/.env
+
+# Ignore any .dump files
+**/*.dump
+
+# Ignore chroma_db dir
+chroma_db

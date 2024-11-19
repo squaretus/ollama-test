@@ -1,13 +1,23 @@
 services:
+  chromadb:
+    image: chromadb/chroma:0.5.20
+    env_file:
+      - .env
+    volumes:
+      - chroma:/chroma/chroma/
+    ports:
+      - '${PORT_EXTERNAL_CHROMADB}:8000'
+
   ollama:
     build: .
+    entrypoint: sh ./docker-entrypoint.sh
     env_file:
       - .env
     volumes:
       - ./:/app:cached
       - ollama:/root/.ollama
     ports:
-      - '11434:11434'
+      - '${PORT_EXTERNAL_OLLAMA}:11434'
 
   open_webui:
     image: ghcr.io/open-webui/open-webui:main
@@ -15,10 +25,11 @@ services:
       - .env
     volumes:
       - ollama:/root/.ollama
-      - open-webui:/app/backend/data
+      - open_webui:/app/backend/data
     ports:
-      - '3003:8080'
+      - '${PORT_EXTERNAL_OPEN_WEBUI}:8080'
 
 volumes:
   ollama:
-  open-webui:
+  open_webui:
+  chroma:
